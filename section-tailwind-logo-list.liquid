@@ -1,0 +1,365 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .logo-slide__svg__container svg {
+    width: 6.4rem;
+    height: 6.4rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .logo-slide__svg__container svg {
+      width: 12.8rem;
+      height: 12.8rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="logo-list__wrapper section-{{ section.id }}-padding">
+  {% if section.settings.enable_page_width %}
+    <div class="page-width">
+  {% endif %}
+
+  {% if section.settings.section_title != blank %}
+    <div class="logo-list__text__container color-{{ section.settings.color_scheme }} tw-grid tw-w-full tw-items-center tw-pb-7 md:tw-pb-10">
+      <div class="section-title tw-{{ section.settings.text_alignment }} tw-text-h2-m md:tw-text-h2 tw-font-bold">
+        {{ section.settings.section_title }}
+      </div>
+      {% if section.settings.section_paragraph != blank %}
+        <div class="section-paragraph tw-{{ section.settings.text_alignment }} tw-text-h3-m md:tw-text-h3 tw-font-medium">
+          {{ section.settings.section_paragraph }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <carousel-component
+    id="carousel-{{ section.id }}"
+    class="{%- if section.blocks.size > 1 -%} splide {%- endif %} logo-list__slider color-{{ section.settings.color_scheme }}"
+    data-autoplay="{{ section.settings.auto_rotate }}"
+    data-autoplay-speed="{{ section.settings.change_slides_speed | times: 1000 | default: 5000 }}"
+    data-showArrows="{{ section.settings.show_arrows }}"
+    data-showArrowsOnMobile="{{ section.settings.show_arrows_on_mobile }}"
+    data-showDots="{{ section.settings.show_dots }}"
+    data-showDotsOnMobile="{{ section.settings.show_dots_on_mobile }}"
+
+    data-desktopPerPage="{{ section.settings.desktop_per_page }}"
+    data-mobilePerPage="{{ section.settings.mobile_per_page }}"
+    data-gapBetweenSlides="{{ section.settings.gap_between_slides_on_desktop | append: 'rem' }}"
+    data-gapBetweenSlidesOnMobile="{{ section.settings.gap_between_slides_on_mobile | append: 'rem' }}"
+    data-mobilePaddingLeft="{{ section.settings.mobile_padding_left | append: '%' }}"
+    data-mobilePaddingRight="{{ section.settings.mobile_padding_right | append: '%' }}"
+
+    data-enableOnMobile="true"
+    data-enableOnDesktop="true"
+    {% if section.settings.enable_carousel_looping %}
+      data-type="loop"
+      data-refresh="true"
+    {% endif %}
+    data-author="FA"
+  >
+    <div class="splide__track">
+      <ul class="splide__list">
+        {% for block in section.blocks %}
+          <li class="splide__slide">
+            <div class="logo-slide color-{{ section.settings.color_scheme }}">
+              {% if block.settings.logo_link != blank %}
+                <a href="{{ block.settings.logo_link }}" class="logo-slide__link">
+              {% endif %}
+              {% if block.settings.desktop_logo_image != blank %}
+                <div class="logo-slide__image__container tw-flex tw-items-center tw-justify-center tw-cursor-pointer">
+                  {% render 'responsive-picture',
+                    desktopImage: block.settings.desktop_logo_image,
+                    mobileImage: block.settings.mobile_logo_image,
+                    img-class: 'tw-w-[6.4rem] tw-h-[6.4rem] md:tw-w-[12.8rem] md:tw-h-[12.8rem] tw-object-cover'
+                  %}
+                </div>
+              {% elsif block.settings.logo_svg %}
+                <div class="logo-slide__svg__container tw-flex tw-items-center tw-justify-center tw-cursor-pointer">
+                  {{ block.settings.logo_svg }}
+                </div>
+              {% else %}
+                {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg tw-h-[6.4rem] tw-w-[6.4rem] md:tw-h-[12.8rem] md:tw-w-[12.8rem]' }}
+              {% endif %}
+              {% if block.settings.logo_title != blank and section.settings.show_logo_text %}
+                <p class="logo-slide__title tw-cursor-pointer tw-text-center tw-text-black tw-text-h3 md:tw-text-h3 tw-font-normal tw-pt-5 md:tw-pt-6">
+                  {{ block.settings.logo_title }}
+                </p>
+              {% endif %}
+              {% if block.settings.logo_link != blank %}
+                </a>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </carousel-component>
+  {% if section.settings.enable_page_width %}
+    </div>
+  {% endif %}
+</div>
+
+{% if section.blocks.size > 1 %}
+  <script src="{{ 'carousel.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Logo list",
+  "tag": "section",
+  "class": "logo-list-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "Logo list"
+    },
+    {
+      "type": "richtext",
+      "id": "section_paragraph",
+      "label": "section_paragraph",
+      "default": "<p>O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar um espécime de livro.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme_1",
+      "label": "Color Scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_page_width",
+      "label": "Enable page width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo_text",
+      "label": "Show text under logo",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "text-left",
+          "label": "Left"
+        },
+        {
+          "value": "text-center",
+          "label": "Center"
+        },
+        {
+          "value": "text-right",
+          "label": "Right"
+        }
+      ],
+      "default": "text-center"
+    },
+    {
+      "type": "header",
+      "content": "Carousel settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_on_mobile",
+      "label": "Show arrows on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_on_mobile",
+      "label": "Show dots on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_carousel_looping",
+      "label": "Enable carousel looping",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto-rotate carousel",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-rotate carousel every",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "desktop_per_page",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "itm",
+      "label": "Carousal items on desktop",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "mobile_per_page",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "unit": "itm",
+      "label": "Carousal items on mobile",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_left",
+      "min": 0,
+      "max": 80,
+      "step": 10,
+      "unit": "%",
+      "label": "Slight left gap for previous item peek (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_right",
+      "min": 0,
+      "max": 80,
+      "step": 10,
+      "unit": "%",
+      "label": "Slight right gap for next item peek (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_between_slides_on_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "rem",
+      "label": "Gap between slides on desktop",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "gap_between_slides_on_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "rem",
+      "label": "Gap between slides on mobile",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Section padding settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo_block",
+      "name": "Logo block",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Logo block settings",
+          "info": "Use the settings below to add images for your logo on mobile and desktop. To add an SVG logo instead, leave the image pickers empty and enter your SVG code directly!"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_logo_image",
+          "label": "Logo image (desktop)",
+          "info": "Recommended image dimenisions: 128 x 128 pixels"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_logo_image",
+          "label": "Logo image (mobile)",
+          "info": "Recommended image dimenisions: 64 x 64 pixels"
+        },
+        {
+          "type": "html",
+          "id": "logo_svg",
+          "label": "Logo svg",
+          "info": "Add the html code for the Logo svg here! Recommended svg dimenisions: 128 x 128 pixels"
+        },
+        {
+          "type": "text",
+          "id": "logo_title",
+          "default": "Durex India",
+          "label": "Logo title"
+        },
+        {
+          "type": "url",
+          "id": "logo_link",
+          "label": "Logo link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo list",
+      "blocks": [
+        {
+          "type": "logo_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
