@@ -1,8 +1,12 @@
+(Will update dev is too tired so he is sleeping, until then enjoy the preview link xD)
+
 # Sample Component
 
 Utilize this section to detail the component, explaining the specific problem it addresses, its ideal use cases, and step-by-step instructions on how to implement it. This comprehensive description will help users understand its relevance and functionality, ensuring they can effectively integrate and leverage the component in their Shopify storefronts. 
 
-**Live Preview Link**: https://dummyimage.com/
+**Live Preview Link**: https://fozail-ahmad-store.myshopify.com/?preview_theme_id=136164081845
+
+**Customizer Link:** https://admin.shopify.com/store/fozail-ahmad-store/themes/136164081845/editor
 
 
 ## Features
