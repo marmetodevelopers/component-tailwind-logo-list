@@ -40,6 +40,9 @@ This logo list (Tailwind) component has been built to display a carousel section
     
  - ### Step 3:
     Add or replace the carousel.js file under assets folder
+   
+ - ### Step 4:
+    Ensure that tailwind css has been installed in your theme for this version of logo list to works!
 
 # Important Notes
 
