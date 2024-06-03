@@ -1,36 +1,45 @@
-(Will update dev is too tired so he is sleeping, until then enjoy the preview link xD)
+# Logo List Component
 
-# Sample Component
-
-Utilize this section to detail the component, explaining the specific problem it addresses, its ideal use cases, and step-by-step instructions on how to implement it. This comprehensive description will help users understand its relevance and functionality, ensuring they can effectively integrate and leverage the component in their Shopify storefronts. 
+This logo list (Tailwind) component has been built to display a carousel section that shows the logos and title of the brands across the e-commerce industry! This section also consists of a section title and paragraph options, options for image or svg for the logos and numerous carousel customizable settings! 
 
 **Live Preview Link**: https://fozail-ahmad-store.myshopify.com/?preview_theme_id=136164081845
 
 **Customizer Link:** https://admin.shopify.com/store/fozail-ahmad-store/themes/136164081845/editor
 
-
 ## Features
 
- - Feature 1 [*Example: Option to show / hide slider dots*]
- - Feature 2 [*Example: Option to switch layout grid / slider*]
- - Feature 3 [*Example: Option to customise rating stars*]
-
+ - Feature 1 Options for section title and section paragraph
+ - Feature 2 Option for section color scheme
+ - Feature 3 Option to enable page width for the section
+ - Feature 4 Option to show title under the logo 
+ - Feature 5 Option for section text alignment
+ - Feature 6 Options to show/hide arrows on mobile and desktop
+ - Feature 7 Options to show/hide dots on mobile and desktop
+ - Feature 8 Option to enable carousel looping
+ - Feature 9 Options to auto rotate the carousel and control auto rotate speed
+ - Feature 10 Options to select the no. of carousel items on mobile and desktop
+ - Feature 11 Options to set the 'Slight left and right gap for previous item peek' on mobile (Mobile padding left and padding right)
+ - Feature 12 Options to set the gap between the carousel elements on mobile and desktop
+ - Feature 13 Options to set the section padding
+ - Feature 14 Block options to add mobile and desktop logo images
+ - Feature 15 Block options to add logo svg (To add an svg, leave the mobile and desktop logo image pickers empty)
+ - Feature 16 Block options to add logo title and logo link
 
 ## Dependencies
 
- - Dependency 1 [*Example: Splide slider (https://splidejs.com/)*]
- - Dependency 2 [*Example: Animate CSS (https://animate.style/)*]
- - Dependency 3 [*Example: Google sheet API Key*]
-
+ - Dependency 1 Tailwind CSS (v3.4.3)
+ - Dependency 2 splide.min.js and splide.min.css (v4.1.2)
 
 ## Implementation Steps
 
  - ### Step 1: 
-   Navigate to `theme.liquid` file under Layout folder
+   Add a new section file under the sections folder and copy/paste the code from 'section-tailwind-logo-list.liquid'
    
   - ### Step 2:
-	 Add the below code / Copy the code from `src` folder and paste it in
-   `theme.liquid` file just above closing of `</body>` tag
+    Add splide.min.js and splide.min.css in your assets folder
+    
+ - ### Step 3:
+    Add or replace the carousel.js file under assets folder
 
 # Important Notes
 
